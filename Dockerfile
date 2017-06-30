@@ -17,7 +17,14 @@ RUN cd ~ && wget http://download.qt.io/official_releases/qt/5.9/5.9.0/single/qt-
 RUN cd ~ && tar -xvf qt-5.9.tar.xz && rm -f qt-5.9.tar.xz
 
 RUN cd ~/qt-everywhere-opensource-src-5.9.0 && \
-	./configure -confirm-license -opensource -nomake examples -nomake tests -no-compile-examples -no-xcb -prefix /opt/Qt -skip qtconnectivity -static -openssl-linked -skip multimedia -skip winextras -skip activeqt -skip location -skip webchannel -skip webkit -skip androidextras -skip macextras -skip quick1 -skip wayland -skip serialport -skip enginio -skip webengine -nomake tools -I/usr/local/ssl/include
+	./configure -confirm-license -opensource -nomake examples \
+	-nomake tests -no-compile-examples -no-xcb \
+	-prefix /opt/Qt -skip qtconnectivity -static \
+	-openssl-linked -skip multimedia -skip winextras \
+	-skip activeqt -skip location -skip webchannel \
+	-skip webkit -skip androidextras -skip macextras \
+	-skip quick1 -skip wayland -skip serialport \
+	-skip enginio -skip webengine -nomake tools -I/usr/local/ssl/include
 RUN cd ~/qt-everywhere-opensource-src-5.9.0 && make -j4
 RUN cd ~/qt-everywhere-opensource-src-5.9.0 && make install
 
