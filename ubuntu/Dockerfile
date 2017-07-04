@@ -9,7 +9,6 @@ RUN apt-get install -y '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrende
 RUN cd && wget https://www.openssl.org/source/openssl-1.0.2l.tar.gz
 RUN cd && tar -xvf openssl-1.0.2l.tar.gz \ 
 	&& rm -f openssl-1.0.2l.tar.gz \
-	&& apt install -y make \
 	&& cd openssl-1.0.2l && ./Configure linux-x86_64 -O3 && make && make install
 ENV OPENSSL_LIBS '-L/usr/local/ssl/lib -lssl -lcrypto'
 
@@ -19,8 +18,7 @@ RUN cd ~ && wget http://download.qt.io/official_releases/qt/5.9/5.9.0/single/qt-
 RUN cd ~ && tar -xvf qt-5.9.tar.xz && rm -f qt-5.9.tar.xz
 
 RUN cd ~/qt-everywhere-opensource-src-5.9.0 && \
-	./configure -confirm-license -opensource -nomake examples \
-	-nomake tests -no-compile-examples \
+	./configure -confirm-license -opensource -release \
 	-prefix /opt/Qt -skip qtconnectivity -static \
 	-openssl-linked -skip multimedia -skip winextras \
 	-skip activeqt -skip location -skip webchannel \
