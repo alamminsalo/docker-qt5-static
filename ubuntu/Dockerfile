@@ -25,8 +25,8 @@ RUN cd ~/qt-everywhere-opensource-src-5.9.0 && \
 	-skip activeqt -skip location -skip webchannel \
 	-skip webkit -skip androidextras -skip macextras \
 	-skip serialport -skip webengine \
-	-nomake tools -I/usr/local/ssl/include -qt-xcb
-RUN cd ~/qt-everywhere-opensource-src-5.9.0 && make -j4
+	-nomake tools -nomake demos -nomake examples -I/usr/local/ssl/include -qt-xcb
+RUN cd ~/qt-everywhere-opensource-src-5.9.0 && make
 RUN cd ~/qt-everywhere-opensource-src-5.9.0 && make install
 ENV PATH $PATH:/opt/Qt/bin
 
