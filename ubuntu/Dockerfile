@@ -14,25 +14,26 @@ RUN cd && tar -xvf openssl-1.0.2l.tar.gz \
 ENV OPENSSL_LIBS '-L/usr/local/ssl/lib -lssl -lcrypto'
 
 # qt 5.9.0
-RUN cd ~ && wget http://download.qt.io/official_releases/qt/5.9/5.9.0/single/qt-everywhere-opensource-src-5.9.0.tar.xz -O qt-5.9.tar.xz
+RUN cd ~ && wget http://download.qt.io/official_releases/qt/5.9/5.9.1/single/qt-everywhere-opensource-src-5.9.1.tar.xz -O qt.tar.xz
 
-RUN cd ~ && tar -xvf qt-5.9.tar.xz && rm -f qt-5.9.tar.xz
+RUN cd ~ && tar -xvf qt.tar.xz && rm -f qt.tar.xz
 
-RUN cd ~/qt-everywhere-opensource-src-5.9.0 && \
+RUN cd ~/qt-everywhere-opensource-src-5.9.1 && \
 	./configure -confirm-license -opensource -release \
-	-prefix /opt/Qt -skip qtconnectivity -static \
-	-openssl-linked -skip multimedia -skip winextras \
-	-skip activeqt -skip location -skip webchannel \
-	-skip webkit -skip androidextras -skip macextras \
+	-prefix /opt/Qt \
+	-skip webchannel \
+	-skip webkit \
 	-skip serialport -skip webengine \
-	-nomake tools -nomake demos -nomake examples -I/usr/local/ssl/include -qt-xcb
-RUN cd ~/qt-everywhere-opensource-src-5.9.0 && make
-RUN cd ~/qt-everywhere-opensource-src-5.9.0 && make install
+	-nomake tools -nomake examples -nomake tests -make libs \
+	-qt-xcb -qt-xkbcommon -qt-harfbuzz -qt-libpng -qt-libjpeg
+	
+RUN cd ~/qt-everywhere-opensource-src-5.9.1 && make -j12
+RUN cd ~/qt-everywhere-opensource-src-5.9.1 && make install
 ENV PATH $PATH:/opt/Qt/bin
 
 # cleanup
 RUN rm -rf ~/openssl-1.0.2l
-RUN rm -rf ~/qt-everywhere-opensource-src-5.9.0
+RUN rm -rf ~/qt-everywhere-opensource-src-5.9.1
 
 
 
